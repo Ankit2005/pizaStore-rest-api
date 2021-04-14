@@ -1,0 +1,34 @@
+
+npm init -y 
+
+npm i esm 
+
+npm i express
+
+npm i mongoose
+
+npm i dotenv
+
+npm i nodemon -D
+
+npm i joi //  for use validations 
+
+ npm i bcrypt
+
+======================**==**==
+
+
+Todos Check LIst
+
+☑️ Register a user
+☑️ Login a user
+❌ Who am i
+❌ Add new product
+❌ Update a product
+❌ Get all product
+❌ get single product
+❌ Delete a product
+
+
+
+
