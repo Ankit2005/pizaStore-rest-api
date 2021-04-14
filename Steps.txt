@@ -22,7 +22,7 @@ Todos Check LIst
 
 ☑️ Register a user
 ☑️ Login a user
-❌ Who am i
+☑️ Who am i
 ❌ Add new product
 ❌ Update a product
 ❌ Get all product

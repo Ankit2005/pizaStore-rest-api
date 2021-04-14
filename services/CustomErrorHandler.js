@@ -13,6 +13,14 @@ class CustomErrorHandler extends Error {
     static wrongCredentials(message = "UserName And Password Is Rung"){
         return new CustomErrorHandler(409, message)
     }
+
+    static auth(message = "unAuthorized"){
+        return new CustomErrorHandler(409, message)
+    }
+
+    static notFound(message = "404 Not Found"){
+        return new CustomErrorHandler(404, message)
+    }
 }
 
 export default CustomErrorHandler
