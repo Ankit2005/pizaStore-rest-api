@@ -4,6 +4,7 @@ import errorHandler from './middlewares/errorHandler';
 const app = express();
 import routes from './routes'
 import mongoose from 'mongoose'
+import path from 'path'
 
 // Database connection
 mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
@@ -13,10 +14,12 @@ db.once('open', () => {
   console.log('DB connected...');
 });
 
+// declare global variable
+global.appRoot = path.resolve(__dirname);
 
-
-// Middlewares
-app.use(express.json());
+// Middleware
+app.use(express.urlencoded({extended : false})) // help this middleware use multipart form data
+app.use(express.json()); // help this middleware send json data to client
 app.use('/api', routes);
 app.use(errorHandler);
 
