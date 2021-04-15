@@ -23,6 +23,7 @@ Todos Check LIst
 ☑️ Register a user
 ☑️ Login a user
 ☑️ Who am i
+☑️ Refresh Token
 ❌ Add new product
 ❌ Update a product
 ❌ Get all product

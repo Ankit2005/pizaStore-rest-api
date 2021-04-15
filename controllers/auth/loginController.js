@@ -1,8 +1,9 @@
 import Joi from 'Joi';
-import {User} from '../../models';
+import { User, Refreshtokens } from '../../models';
 import CustomErrorHandler from '../../services/CustomErrorHandler';
 import JwtService from '../../services/JwtService'
 import bcrypt from 'bcrypt';
+import { REFRESH_SECRET } from '../../config'
 
 const loginController = {
 
@@ -29,19 +30,32 @@ const loginController = {
             // compare the password
             const match = await bcrypt.compare(password, user.password);
 
-            if(!match){
+            if (!match) {
                 return next(CustomErrorHandler.wrongCredentials());
             }
 
             // return token 
-            const access_token = JwtService.sign({_id : user._id, role : user.role });
-            res.json({access_token});
+            const access_token = JwtService.sign({ _id: user._id, role: user.role });
+            const token_refresh = JwtService.sign({ _id: user._id, role: user.role }, '1y', REFRESH_SECRET);
+
+            // store refresh token in database
+            await Refreshtokens.create({ token: token_refresh });
+
+            res.json({ access_token, refresh_token: token_refresh });
 
         } catch (err) {
             return next(err);
         }
-    }
+    },
 
+    async logout(req, res, next) {
+        try {
+            await Refreshtokens.deleteOne({ token: req.body.refresh_token })
+        } catch (error) {
+            return next(new Error("Something Went Wrong In The Database"))
+        }
+        res.json({ 'msg': "Logout Successfully" });
+    }
 }
 
 export default loginController;
