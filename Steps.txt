@@ -30,7 +30,7 @@ Todos Check LIst
 ☑️ Update a product
 ☑️ Delete a product
 ☑️ Get all product
-❌ get single product
+☑️ get single product
 
 
 
