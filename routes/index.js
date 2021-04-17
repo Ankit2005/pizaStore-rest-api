@@ -13,7 +13,11 @@ router.post("/login", loginController.login)
 router.post("/logout", auth, loginController.logout)
 router.get("/me", auth, userController.me)
 router.post("/refresh", refreshTokenController.refresh)
+
 router.post("/products", [auth, admin], productController.store)
+router.get("/products", productController.index)
+router.get("/products/:id", productController.fetchSingle)
 router.put("/products/:id", [auth, admin], productController.update)
+router.delete("/products/:id", [auth, admin], productController.destroy)
 
 export default router;

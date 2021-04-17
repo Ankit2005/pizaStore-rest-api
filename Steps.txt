@@ -28,9 +28,9 @@ Todos Check LIst
 ☑️ Refresh Token
 ☑️ Add new product
 ☑️ Update a product
-❌ Get all product
+☑️ Delete a product
+☑️ Get all product
 ❌ get single product
-❌ Delete a product
 
 
 

@@ -21,6 +21,7 @@ global.appRoot = path.resolve(__dirname);
 app.use(express.urlencoded({extended : false})) // help this middleware use multipart form data
 app.use(express.json()); // help this middleware send json data to client
 app.use('/api', routes);
+app.use('/uploads', express.static('uploads'))
 app.use(errorHandler);
 
 

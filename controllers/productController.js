@@ -2,7 +2,6 @@ import { Product } from '../models'
 import multer from 'multer';
 import path from 'path';
 import CustomErrorHandler from '../services/CustomErrorHandler';
-import Joi from 'Joi';
 import fs from 'fs'
 import productSchema from '../validators/productSchema'
 
@@ -98,6 +97,55 @@ const productController = {
 
             res.json({ "product": document });
         })
+    },
+
+    async fetchSingle(req, res, next) {
+
+        try {
+            const singleProduct = await Product.findOne({ _id: req.params.id }).select('-updatedAt -__v');
+            if (!singleProduct) {
+                return next(new Error("Product Not Found"))
+            }
+            res.json(singleProduct);
+        } catch (error) {
+            return next(CustomErrorHandler.serverError());
+        }
+    },
+
+    async destroy(req, res, next) {
+
+        try {
+            const productDetails = await Product.findOneAndRemove({ _id: req.params.id });
+            const imagePath = productDetails._doc.image;
+
+            // delete image            
+            if (!productDetails) {
+                return next(new Error('Nothing to delete'));
+            }
+
+            fs.unlink(`${appRoot}/${imagePath}`, (err) => {
+                if (err) {
+                    return next(CustomErrorHandler.serverError(err.message))
+                }
+                res.json(productDetails)
+            })
+
+
+        } catch (error) {
+            return next(error)
+        }
+    },
+
+    async index(req, res, next) {
+        try {
+            let documents;
+            documents = await Product.find().select('-updatedAt -__v').sort({ _id: -1 });
+            res.json(documents);
+
+        } catch (error) {
+            return next(error)
+        }
+
     }
 }
 
