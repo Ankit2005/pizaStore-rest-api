@@ -17,6 +17,12 @@ db.once('open', () => {
 // declare global variable
 global.appRoot = path.resolve(__dirname);
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 // Middleware
 app.use(express.urlencoded({extended : false})) // help this middleware use multipart form data
 app.use(express.json()); // help this middleware send json data to client
